@@ -122,3 +122,31 @@ I should add that a combination of the 2 styles is also possible, and that is th
 In the code from Step 5 we had already removed some layers and now we re left with 3 packages and 1 class per package. It now makes sence to switch to a simpler "Package by Function" approach.
 
 This code branch has a total of 5 Java code files and 148 lines of Java code excluding blank lines.
+
+### Step 6
+
+One common critisizm of the coding style in Step 5 is that it is quite annotation heavy. This is a common critisizm of Spring Boot in general. Either you like annotations or you do not.
+
+In my opinion the annotations on the fields of the entity classes are not really an issue at all. There is a blank line between every field and thus easy to find the field you are looking for.
+
+On the REST controllers the annotations do cause a bit of a problem. We have lots of annotations above every REST method to define the REST interface with things like HTTP methods, response DTO classes and OpenApi/Swagger documentation. Then we also have annotations on the method parameters for request DTO classes, data validation and OpenApi/Swagger documentation. All these annotations sometimes get in the way if you just want to look at the business logic in the method.
+
+Here we will benefit by separtating these concerns of REST interface and business logic. But we do not want a full fledged layer for the REST interface where it call methods on the business logic layer. Here a simple interface and implementation class with suffice. Our REST interface will carry all of the REST annotations and our implementing class will take care of the business logic.
+
+Here we also need to be smart with terminology. An interface called PersonController and an implementing class called PersonControllerImpl is not an ideal solution. We will call the interface PersonResource to refer to the REST resource and the implementing class will be called PersonController as it needs to be annotated with @RestController.
+
+This code branch has a total of 6 Java code files and 158 lines of Java code excluding blank lines.
+
+## Conclusion
+
+Code quality, cleanliness and readibility is highly subjective. At the end of the day what is important is if normal human beings can easily navigate and read our code. There are other measures of good quality code that are unrelated to readibility and cleanliness and sometimes we need to make compromises to readibility and cleanliness to accomodate these other measures.
+
+What we should not do is simply accept the status quo without understanding the logic behind it. Thus missing out on the opportunities we have to find better ways of writing code and to write better and more maintainable code faster.
+
+If the code behind a piece of functionality is spread over fewer code files and take up fewer lines of code, then it will unquestionably be easier for developers to follow and read. But don't forget about separation of concerns and thus writing a 1000 lines of code in a single method.
+
+In general strive to separate solving business/domain problems from solving technical/implementation problems. Saving data about a person in a database is a business/domain problem, but creating various DTOs to represent that person in different scenarios is a technical/implementation problem.
+
+Try solving technical/implementation problems is separate and reusable code libraries and include these libraries with your dependency management tools. Mayby the technical/implementation problem you have has already been solved, even by a dependency you already have on your project. The @JsonView annotation is exactly such an example for solving the DTO problem in an elegant way.
+
+In this project we were able to refactor our initial code to have 30% fewer lines of code while making our code easier to read and maintain. We did this by reasoning about various aspects of our code and finding ways to improve our code one step at a time.
