@@ -1,4 +1,4 @@
-package net.binarypaper.springbootcodingstyles.person.entity;
+package net.binarypaper.springbootcodingstyles.person;
 
 import com.fasterxml.jackson.annotation.JsonView;
 

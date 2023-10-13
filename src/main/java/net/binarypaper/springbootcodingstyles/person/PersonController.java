@@ -1,4 +1,4 @@
-package net.binarypaper.springbootcodingstyles.person.controller;
+package net.binarypaper.springbootcodingstyles.person;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,8 +26,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import net.binarypaper.springbootcodingstyles.person.entity.Person;
-import net.binarypaper.springbootcodingstyles.person.repository.PersonRepository;
 
 @RestController
 @RequestMapping(path = "person", produces = { MediaType.APPLICATION_JSON_VALUE })

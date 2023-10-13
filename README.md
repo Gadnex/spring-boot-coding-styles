@@ -102,3 +102,23 @@ But what should we call this layer? Should it be the Controller layer that now i
 Please take causion. In your application you may still have more concerns and thus may need more layers.
 
 This code branch has a total of 5 Java code files and 151 lines of Java code excluding blank lines.
+
+### Step 5
+
+This is a good opportunity to discuss code packaging. Code packages are a way to organize your code classes by grouoing similar or related classes together in a directory/folder in a logical manner. This makes it easier for developers to navigate the code base and find the classes they are looking for when making code changes and bug fixes.
+
+From the perspective of the compiler code packages are less important as the compiler is quite happy if all your classes are in a single package. Other developers and your future self will not think this was a good idea.
+
+When packaging code the main goal is to never have a list that is to long to read before selecting one of the items.
+
+In the past with large monolithic applications it was proposed to create a package for every layer of your appliccation. So you would think of the change you want to make and in what layer the changes should be i.e. presentation layer, business logic layer and persistence layer. When opening a layer you would be presented with a long list of classes sorted alphabetically and you could find the class that you are looking for if you know its name. This is commonly referred to as "Package by Layer".
+
+But with the advent of Domain Driven Design and later Microservice Architectures there has been a tendensy of creating packages per business domain or functional area. This package would contain all the classes related to that business domain or functional area. This is commonly referred to as "Package by Function".
+
+With Microservice architectures specifically, there tends to be very few business domains per microservice, but they would still likelike be more than one. Thus for monoliths "Package by Layer" makes more sence and for microservices "Package by Function" makes more sense.
+
+I should add that a combination of the 2 styles is also possible, and that is the approach we used in Step 1 of our code. Here were created a package per function for the Person domain. Within this person package we created packages by layer.
+
+In the code from Step 5 we had already removed some layers and now we re left with 3 packages and 1 class per package. It now makes sence to switch to a simpler "Package by Function" approach.
+
+This code branch has a total of 5 Java code files and 148 lines of Java code excluding blank lines.
