@@ -27,7 +27,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import net.binarypaper.springbootcodingstyles.person.entity.Person;
-import net.binarypaper.springbootcodingstyles.person.service.PersonService;
+import net.binarypaper.springbootcodingstyles.person.repository.PersonRepository;
 
 @RestController
 @RequestMapping(path = "person", produces = { MediaType.APPLICATION_JSON_VALUE })
@@ -36,14 +36,14 @@ import net.binarypaper.springbootcodingstyles.person.service.PersonService;
 @RequiredArgsConstructor
 public class PersonController {
 
-    private final PersonService personService;
+    private final PersonRepository personRepository;
 
     @GetMapping
     @Operation(summary = "Get a list of all persons", description = "Get a list of all persons")
     @ApiResponses({ @ApiResponse(responseCode = "200", description = "List of all persons") })
     @JsonView(Person.Views.List.class)
     public List<Person> getAllPersons() {
-        return personService.getAllPersons();
+        return personRepository.findAll();
     }
 
     @GetMapping(path = "{id}")
@@ -55,7 +55,7 @@ public class PersonController {
     @JsonView(Person.Views.View.class)
     public Person getPersonById(
             @RequestParam @Parameter(description = "Id of the person to get", example = "1") Long id) {
-        Optional<Person> person = personService.getPersonById(id);
+        Optional<Person> person = personRepository.findById(id);
         if (person.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Invalid id");
         }
@@ -73,6 +73,6 @@ public class PersonController {
     @Transactional
     public Person createPerson(
             @RequestBody @Parameter(description = "The person to create") @Validated(Person.Views.Create.class) @JsonView(Person.Views.Create.class) Person person) {
-        return personService.createPerson(person);
+        return personRepository.save(person);
     }
 }

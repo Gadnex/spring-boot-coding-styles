@@ -88,3 +88,17 @@ The similarities between DTOs and validation groups should start to become clear
 So let's update the code to remove the DTOs and mapper classes and replace them with the @JsonView annotations and interfaces to represent the DTOs and validation groups. We are also going to move the Bean Validation anotations and OpenApi/Swagger annotations on the DTO classes to the entity classes so that all info about the entity is together in one place. As a side effect our OpenApi/Swagger documentation for the DTOs will also be improved.
 
 This code branch has a total of 6 Java code files and 172 lines of Java code excluding blank lines.
+
+### Step 4
+
+Next we want to take a serious look at the layers in our application. The reason we have layers in our application at all is for separation of concerns. Thus every technical concern should have its own layer.
+
+In our initial code from Step 1, the controller layer was responsible for converting/mapping between entity objects and DTO objects and vice versa. But this logic has been completely removed in Step 3 as the Jackson @JsonView annotations takes care of DTOs for us. The service layer is still unchanged and is responsible for the business logic of the application, which includes the calls to the repository layer of the application.
+
+Now it seems we have one fewer concern due to the usage of the @JsonView annotations, and thus we should technically have one fewer layer as well.
+
+But what should we call this layer? Should it be the Controller layer that now is only responsible for the business logic, or do we call it the service layer. Since we are going to annotate this layer with the Spring @RestController annotation, I would prefer calling it the controller layer.
+
+Please take causion. In your application you may still have more concerns and thus may need more layers.
+
+This code branch has a total of 5 Java code files and 151 lines of Java code excluding blank lines.
